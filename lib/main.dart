@@ -55,9 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
   static const platform = const MethodChannel('sleep_timer.edouardmenayde.fr/audio');
 
   FlutterSound flutterSound = new FlutterSound();
-  final aMinute = Duration(milliseconds: 1 * 1000);
+  final aMinute = Duration(minutes: 1);
+  static final defaultRemainingTime = 15;
 
-  int remainingTime = 1;
+  int remainingTime = defaultRemainingTime;
   bool timerActive = false;
   Future<void> timer;
 
@@ -90,13 +91,15 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateTimer() {
     setState(() {
       if (timerActive) {
+        print(timerActive);
         remainingTime -= 1;
+        print(timerActive);
         if (remainingTime > 0) {
           timer = Future.delayed(aMinute, updateTimer);
         }
         else {
           timerActive = false;
-          remainingTime = 1;
+          remainingTime = defaultRemainingTime;
           stopSound();
         }
       }
